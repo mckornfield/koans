@@ -13,9 +13,29 @@
 # and
 #   about_triangle_project_2.rb
 #
-def triangle(a, b, c)
-  # WRITE THIS CODE
+
+def check_sides_valid(side_to_compare, one_side, other_side)
+  return side_to_compare < (one_side + other_side) && side_to_compare > (one_side - other_side).abs
 end
+
+def triangle(a, b, c)
+  if a <= 0 || b <= 0 || c <= 0
+    raise TriangleError, "No negative or zero sides"
+  end
+
+  if !check_sides_valid(a,b,c)
+    raise TriangleError, "Invalid number of sides"
+  end
+  
+  if a == b && b == c
+    :equilateral
+  elsif a == b || b == c || a == c
+    :isosceles
+  else  
+    :scalene
+  end
+end
+
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
